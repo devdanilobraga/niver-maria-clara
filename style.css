@@ -1,0 +1,151 @@
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f3eefc;
+    color: #4a3b63;
+}
+
+/* ------------ HEADER HERO ------------- */
+
+.header-hero {
+    background: url('tema.jpg') center/cover no-repeat;
+    height: 350px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-hero .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(70, 0, 90, 0.4);
+}
+
+.title {
+    position: relative;
+    color: white;
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+}
+
+/* ------------ AGRADECIMENTO ------------- */
+
+.agradecimento {
+    max-width: 700px;
+    margin: 50px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(130, 90, 180, 0.2);
+    text-align: center;
+}
+
+.agradecimento h2 {
+    color: #7a4ac9;
+    font-size: 28px;
+}
+
+.btn-theme {
+    display: inline-block;
+    background: #b97aff;
+    padding: 15px 30px;
+    margin-top: 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 30px;
+    box-shadow: 0 0 12px rgba(150, 90, 250, 0.6);
+    transition: 0.3s;
+}
+.btn-theme:hover {
+    background: #d9b2ff;
+    box-shadow: 0 0 16px rgba(120, 60, 255, 0.8);
+}
+
+/* ------------ GALERIA ------------- */
+
+.galeria-header {
+    text-align: center;
+    padding: 30px 0;
+    background: linear-gradient(135deg, #d5c0ff, #b896ff);
+    color: white;
+    text-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+.gallery {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.foto-box {
+    background: white;
+    padding: 5px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(160, 120, 220, 0.3);
+}
+
+.gallery img {
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.gallery img:hover {
+    transform: scale(1.03);
+}
+
+/* ------------ MODAL ------------- */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(20,0,40,0.8);
+}
+
+.modal img {
+    display: block;
+    max-width: 90%;
+    max-height: 80%;
+    margin: 80px auto 20px;
+    border-radius: 10px;
+}
+
+#close {
+    position: absolute;
+    top: 20px; right: 30px;
+    font-size: 45px;
+    color: white;
+    cursor: pointer;
+}
+
+
+.foto-box {
+    position: relative;
+}
+
+.btn-download {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: #ff4081;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+.btn-download:hover {
+    opacity: 1;
+}

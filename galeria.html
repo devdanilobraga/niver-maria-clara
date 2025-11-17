@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria - 15 anos Maria Clara</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="galeria-header">
+    <h1>Galeria de Fotos</h1>
+    <p>Clique para ampliar e baixar</p>
+</header>
+
+<div class="gallery" id="gallery"></div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+    <span id="close">&times;</span>
+    <img id="modalImg">
+    <a id="downloadBtn" download class="btn-theme">Baixar Foto</a>
+</div>
+<script>
+// Mude aqui se quiser usar outra pasta (ex: "assets")
+const PASTA = "fotos";  
+</script>
+
+<script src="fotos-lista.js"></script>
+
+<script>
+// --- GALERIA AUTOMÁTICA ---
+const gallery = document.getElementById("gallery");
+
+imagens.forEach(nome => {
+    const box = document.createElement("div");
+    box.className = "foto-box";
+
+    // IMG
+    const img = document.createElement("img");
+    img.src = `${PASTA}/${nome}`;
+    img.alt = nome;
+    img.className = "foto";
+    img.loading = "lazy";
+    img.title = "Clique para ampliar";
+
+    img.onclick = () => abrirModal(img.src, nome);
+
+    // 🔥 BOTÃO DE DOWNLOAD DIRETO
+    const btn = document.createElement("button");
+    btn.className = "btn-download";
+    btn.innerText = "Baixar";
+
+    btn.onclick = async (e) => {
+        e.stopPropagation(); // impede abrir o modal
+
+        const src = `${PASTA}/${nome}`;
+        const response = await fetch(src);
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = nome;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        URL.revokeObjectURL(url);
+    };
+
+    box.appendChild(img);
+    box.appendChild(btn);
+    gallery.appendChild(box);
+});
+
+// --- MODAL ---
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modalImg");
+const downloadBtn = document.getElementById("downloadBtn");
+const closeBtn = document.getElementById("close");
+
+// 🔥 DOWNLOAD DO MODAL (compatível com iPhone)
+async function abrirModal(src, nomeArquivo) {
+    modal.style.display = "block";
+    modalImg.src = src;
+
+    downloadBtn.onclick = async () => {
+        const response = await fetch(src);
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = nomeArquivo;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        URL.revokeObjectURL(url);
+    };
+}
+
+closeBtn.onclick = () => modal.style.display = "none";
+window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+</script>
+
+
+</body>
+</html>
