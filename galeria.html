@@ -18,9 +18,16 @@
 <!-- Modal -->
 <div id="modal" class="modal">
     <span id="close">&times;</span>
+
+    <!-- Botões de navegação -->
+    <span id="prev" class="nav-btn">&#10094;</span>
+    <span id="next" class="nav-btn">&#10095;</span>
+
     <img id="modalImg">
     <a id="downloadBtn" download class="btn-theme">Baixar Foto</a>
 </div>
+
+
 <script>
 // Mude aqui se quiser usar outra pasta (ex: "assets")
 const PASTA = "fotos";  
@@ -104,6 +111,73 @@ async function abrirModal(src, nomeArquivo) {
 closeBtn.onclick = () => modal.style.display = "none";
 window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
 </script>
+
+<script>
+let fotoAtual = 0;
+
+// Abrir modal
+function abrirModal(src, nomeArquivo) {
+    fotoAtual = imagens.indexOf(nomeArquivo);
+
+    modal.style.display = "block";
+    modalImg.src = src;
+
+    downloadBtn.onclick = async () => {
+        const response = await fetch(src);
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = nomeArquivo;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        URL.revokeObjectURL(url);
+    };
+}
+
+// Fechar
+closeBtn.onclick = () => modal.style.display = "none";
+window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+
+// ---- NAVEGAÇÃO ----
+function mostrarFoto(index) {
+    fotoAtual = (index + imagens.length) % imagens.length; // loop infinito
+    const nome = imagens[fotoAtual];
+    modalImg.src = `${PASTA}/${nome}`;
+
+    downloadBtn.onclick = () => baixar(nome);
+}
+
+function baixar(nome) {
+    const src = `${PASTA}/${nome}`;
+    fetch(src)
+        .then(r => r.blob())
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = nome;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+}
+
+document.getElementById("prev").onclick = () => mostrarFoto(fotoAtual - 1);
+document.getElementById("next").onclick = () => mostrarFoto(fotoAtual + 1);
+
+// Teclado ← →
+document.addEventListener("keydown", e => {
+    if (modal.style.display === "block") {
+        if (e.key === "ArrowLeft") mostrarFoto(fotoAtual - 1);
+        if (e.key === "ArrowRight") mostrarFoto(fotoAtual + 1);
+        if (e.key === "Escape") modal.style.display = "none";
+    }
+});
+</script>
+
 
 
 </body>

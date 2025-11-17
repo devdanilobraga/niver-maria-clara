@@ -149,3 +149,27 @@ body {
 .btn-download:hover {
     opacity: 1;
 }
+
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 55px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    user-select: none;
+}
+
+#prev {
+    left: 25px;
+}
+
+#next {
+    right: 25px;
+}
+
+.nav-btn:hover {
+    color: #ffccff;
+}
